@@ -25,14 +25,10 @@ import java.util.List;
 
 public class TilesView extends View {
 
-    final int PAUSE_LENGTH = 1;
     int displayWidth = Resources.getSystem().getDisplayMetrics().widthPixels;
-    int openedCards = 0;
 
-    float tmpWidth = displayWidth / 5;
-    float tmpHeight = displayWidth / 5;
-    float tmpX = tmpWidth / 3;
-    float tmpY = tmpWidth / 3;
+    float tmpWidth = displayWidth / 5, tmpHeight = displayWidth / 5;
+    float tmpX = tmpWidth / 3, tmpY = tmpWidth / 3;
 
     ArrayList<Card> cards = new ArrayList<>();
     List<Integer> colors;
@@ -44,9 +40,7 @@ public class TilesView extends View {
     int currentIndex;
     int nextColor;
 
-    int redCount;
-    int blueCount;
-    int greenCount;
+    int redCount, blueCount, greenCount;
 
     public TilesView(Context context) {
         super(context);
@@ -55,7 +49,6 @@ public class TilesView extends View {
     public TilesView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         setColorsAndTiles();
-
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -72,11 +65,9 @@ public class TilesView extends View {
 
         int x = (int) event.getX();
         int y = (int) event.getY();
-        //      Log.d("myTag", "onTouchEvent: " + cards.get(3).color);
         if (event.getAction() == MotionEvent.ACTION_DOWN && !isOnPauseNow) {
             for (Card c : cards) {
                 if (c.changeColor(x, y)) {
-
                     if (c.color == colors.get(0)) {
                         nextColor = 1;
                     }
@@ -94,15 +85,9 @@ public class TilesView extends View {
                     PauseTask task = new PauseTask();
                     task.execute();
                     return true;
-
-
                 }
             }
-
-
         }
-
-
         invalidate();
         return true;
     }
@@ -110,7 +95,6 @@ public class TilesView extends View {
     class PauseTask extends AsyncTask<Integer, Void, Void> {
         @Override
         protected Void doInBackground(Integer... integers) {
-
             return null;
         }
 
@@ -133,7 +117,6 @@ public class TilesView extends View {
             }
             counter = 0;
         }
-
     }
 
 
@@ -141,7 +124,6 @@ public class TilesView extends View {
         colors = Arrays.asList(
                 getResources().getColor(R.color.tileColorR), getResources().getColor(R.color.tileColorG),
                 getResources().getColor(R.color.tileColorB));
-
 
         Collections.shuffle(colors);
         int cnt = 0;
@@ -153,7 +135,6 @@ public class TilesView extends View {
                 cnt = 0;
                 Collections.shuffle(colors);
             }
-
             tmpX += tmpWidth + tmpWidth / 10;
             if (((i + 1) % 4) == 0) {
                 tmpX = tmpWidth / 3;
@@ -169,7 +150,6 @@ public class TilesView extends View {
 
 
     public void newGame() {
-
         cards.clear();
         setColorsAndTiles();
         invalidate();
@@ -180,7 +160,6 @@ public class TilesView extends View {
         if (currentIndex == 0) {
             nextIndexes.add(currentIndex + 1);
             nextIndexes.add(currentIndex + 4);
-
         }
 
         if (currentIndex > 0 && currentIndex < 3) {
@@ -244,8 +223,6 @@ public class TilesView extends View {
             }
             cards.get(n).color = colors.get(nextColor);
         }
-
         nextIndexes.clear();
     }
-
 }
